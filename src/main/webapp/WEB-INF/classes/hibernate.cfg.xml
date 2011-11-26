@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+                                         "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory>
+		<mapping class="org.blueoxygen.cimande.security.usermanager.UserSite" />
+		<mapping class="org.blueoxygen.cimande.security.User" />
+		<mapping class="org.blueoxygen.cimande.social.SocialAccount" />
+		<mapping class="org.blueoxygen.cimande.role.Role" />
+		<mapping class="org.blueoxygen.cimande.role.RolePrivilage" />
+		<mapping class="org.blueoxygen.cimande.site.Site" />
+		<mapping class="org.blueoxygen.cimande.role.RoleSite" />
+		<mapping class="org.blueoxygen.cimande.role.RoleSitePrivilage" />
+		<mapping class="org.blueoxygen.cimande.role.UserRole" />
+		<mapping class="org.blueoxygen.cimande.descriptors.Descriptor" />
+		<mapping class="org.blueoxygen.cimande.modulefunction.ModuleFunction" />
+		<mapping class="org.blueoxygen.cimande.section.Section" />
+		<mapping class="org.blueoxygen.cimande.jobdescription.JobDesc" />
+		<mapping class="org.blueoxygen.cimande.company.Company" />
+		<mapping class="org.blueoxygen.cimande.gx.entity.GxTab" />
+		<mapping class="org.blueoxygen.cimande.gx.entity.GxField" />
+		<mapping class="org.blueoxygen.cimande.gx.entity.GxTable" />
+		<mapping class="org.blueoxygen.cimande.gx.entity.GxColumn" />
+		<mapping class="org.blueoxygen.cimande.gx.entity.GxDroplistName" />
+		<mapping class="org.blueoxygen.cimande.gx.entity.GxDroplistValue" />
+		<mapping class="org.blueoxygen.cimande.gx.entity.GxWindow" />
+		<mapping class="org.blueoxygen.cimande.gx.entity.GxWindowRole" />
+		<mapping class="org.blueoxygen.cimande.gx.entity.GxWindowRoleAccess" />
+		<mapping class="org.blueoxygen.debus.entity.GXWindowRoleAccess" />
+		<mapping class="org.blueoxygen.debus.entity.RoleDescriptorACL" />
+		<mapping class="org.blueoxygen.debus.entity.RoleDescriptorACLAccess" />
+		<mapping class="org.blueoxygen.debus.entity.RoleSiteDescriptorACL" />
+		<mapping class="org.blueoxygen.debus.entity.RoleSiteDescriptorACLAccess" />
+		<mapping class="org.blueoxygen.debus.entity.SiteDescriptorACL" />
+		<mapping class="org.blueoxygen.debus.entity.SiteDescriptorACLAccess" />
+		<mapping class="org.blueoxygen.debus.ActionType" />
+		<mapping class="org.blueoxygen.debus.DescriptorAccess" />
+		<mapping class="org.blueoxygen.debus.PermissionType" />
+	</session-factory>
+</hibernate-configuration>

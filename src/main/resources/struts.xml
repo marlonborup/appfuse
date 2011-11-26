@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<bean type="com.opensymphony.xwork2.ActionProxyFactory" name="cimande"
+		class="org.blueoxygen.cimande.rest.CimandeRestActionProxyFactory" />
+	<bean type="org.blueoxygen.cimande.rest.manager.ContentHandlerManager"
+		class="org.blueoxygen.cimande.rest.manager.DefaultContentHandlerManager" />
+
+	<bean type="org.blueoxygen.cimande.rest.handler.ContentHandler"
+		name="jsonHandler" class="org.blueoxygen.cimande.rest.handler.JsonContentHandler" />
+	<bean type="org.blueoxygen.cimande.rest.handler.ContentHandler"
+		name="xmlHandler" class="org.blueoxygen.cimande.rest.handler.XmlContentHandler" />
+
+	<constant name="cimande.rest.extension.prefix" value="service" />
+	<constant name="cimande.rest.idParameterPrefix" value="_" />
+
+	<constant name="struts.actionProxyFactory" value="cimande" />
+	<constant name="struts.convention.result.path" value="/" />
+	<constant name="struts.convention.action.suffix" value="Controller" />
+	<constant name="struts.convention.default.parent.package"
+		value="default" />
+	<constant name="struts.convention.package.locators" value="actions" />
+
+	<package name="default" extends="struts-default">
+		<result-types>
+			<result-type name="redirect"
+				class="org.apache.struts2.dispatcher.ServletRedirectResult" />
+			<result-type name="redirectAction"
+				class="org.apache.struts2.dispatcher.ServletActionRedirectResult" />
+			<result-type name="jsp" class="org.apache.struts2.EmbeddedJSPResult" />
+			<result-type name="json" class="org.apache.struts2.json.JSONResult" />
+		</result-types>
+		<interceptors>
+			<!--interceptor name="hibernate" class="org.hibernate.admin.interceptor.HibernateInterceptor"/ -->
+			<interceptor name="login"
+				class="org.blueoxygen.cimande.security.login.interceptors.LoginInterceptor">
+				<param name="loginPage">/backend/user/index</param>
+				<param name="loginAction">/backend/user/login</param>
+				<param name="logoutAction">/backend/user/logout</param>
+				<param name="ignoreExtensions">jpeg,gif,css</param>
+				<param name="filterUrl">/module, /user, /backend/yuitree</param>
+			</interceptor>
+			<interceptor name="pageAccess"
+				class="org.blueoxygen.debus.interceptors.PageAccessInterceptor">
+				<param name="filterUrl">/module</param>
+			</interceptor>
+			<interceptor name="roleDescriptorACL"
+				class="org.blueoxygen.debus.interceptors.RoleDescriptorACLInterceptor"></interceptor>
+			<interceptor name="roleSiteDescriptorACL"
+				class="org.blueoxygen.debus.interceptors.RoleSiteDescriptorACLInterceptor"></interceptor>
+			<interceptor name="siteDescriptorACL"
+				class="org.blueoxygen.debus.interceptors.SiteDescriptorACLInterceptor"></interceptor>
+			<interceptor name="json"
+				class="org.apache.struts2.json.JSONInterceptor" />
+			<interceptor name="service"
+				class="org.blueoxygen.cimande.rest.interceptors.ServiceInterceptor" />
+			<!-- Basic stack -->
+			<interceptor-stack name="adminStack">
+				<interceptor-ref name="exception" />
+				<interceptor-ref name="logger" />
+				<interceptor-ref name="timer" />
+				<interceptor-ref name="alias" />
+				<interceptor-ref name="servletConfig" />
+				<interceptor-ref name="prepare" />
+				<interceptor-ref name="chain" />
+				<interceptor-ref name="scopedModelDriven" />
+				<interceptor-ref name="modelDriven" />
+				<interceptor-ref name="fileUpload" />
+				<interceptor-ref name="checkbox" />
+				<interceptor-ref name="multiselect" />
+				<interceptor-ref name="staticParams" />
+				<interceptor-ref name="actionMappingParams" />
+				<interceptor-ref name="params">
+					<param name="excludeParams">dojo\..*,^struts\..*</param>
+				</interceptor-ref>
+				<interceptor-ref name="conversionError" />
+				<interceptor-ref name="validation">
+					<param name="validateAnnotatedMethodOnly">true</param>
+					<param name="excludeMethods">input,back,cancel,browse</param>
+				</interceptor-ref>
+				<interceptor-ref name="workflow">
+					<param name="excludeMethods">input,back,cancel,browse</param>
+				</interceptor-ref>
+
+				<interceptor-ref name="json" />
+				<interceptor-ref name="service" />
+				<interceptor-ref name="login" />
+				<interceptor-ref name="pageAccess" />
+
+				<!--interceptor-ref name="hibernate"/ -->
+				<!-- <interceptor-ref name="roleDescriptorACL" /> -->
+				<!-- <interceptor-ref name="roleSiteDescriptorACL" /> -->
+				<!-- <interceptor-ref name="siteDescriptorACL" /> -->
+			</interceptor-stack>
+		</interceptors>
+
+		<default-interceptor-ref name="adminStack" />
+
+		<global-results>
+			<result name="notallowed" type="velocity">
+				/view/error/notallowed.vm
+			</result>
+			<result name="login" type="redirect">
+				/backend/user/index
+			</result>
+		</global-results>
+
+		<!-- action name="index"> <result type="redirect">/backend/user/index</result> 
+			</action -->
+	</package>
+
+	<package name="cimande-default" extends="default">
+		<action name="">
+			<result type="redirectAction">
+				<param name="namespace">/backend/user</param>
+				<param name="actionName">index</param>
+			</result>
+		</action>
+	</package>
+
+	<include file="config/struts-cimande-core.xml" />
+	<include file="config/struts-cimande-gx.xml" />
+	<include file="config/struts-cimande-social.xml" />
+	<include file="config/struts-debus.xml" />
+	<include file="module/cimande-struts-*.xml" />
+	<include file="cimande-module-*.xml" />
+</struts>
